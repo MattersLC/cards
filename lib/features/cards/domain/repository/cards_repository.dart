@@ -14,6 +14,7 @@ abstract interface class CardsRepository {
     required String cvv,
     required String mesExpiracion,
     required String anioExpiracion,
+    required String tipo,
   });
 
   Future<Either<Failure, CreditCard>> updateCardById({
@@ -24,6 +25,7 @@ abstract interface class CardsRepository {
     required String cvv,
     required String mesExpiracion,
     required String anioExpiracion,
+    required String tipo,
   });
 
   Future<Either<Failure, void>> deleteCardById({required int id});

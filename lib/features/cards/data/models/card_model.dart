@@ -9,6 +9,7 @@ class CardModel extends CreditCard {
     required super.cvv,
     required super.mesExpiracion,
     required super.anioExpiracion,
+    required super.tipo,
   });
 
   factory CardModel.fromJson(Map<String, dynamic> map) {
@@ -20,6 +21,20 @@ class CardModel extends CreditCard {
       cvv: map['cvv'] ?? '',
       mesExpiracion: map['mesExpiracion'] ?? '',
       anioExpiracion: map['anioExpiracion'] ?? '',
+      tipo: map['tipo'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'alias': alias,
+      'nombrePropietario': nombrePropietario,
+      'numeroTarjeta': numeroTarjeta,
+      'cvv': cvv,
+      'mesExpiracion': mesExpiracion,
+      'anioExpiracion': anioExpiracion,
+      'tipo': tipo,
+    };
   }
 }

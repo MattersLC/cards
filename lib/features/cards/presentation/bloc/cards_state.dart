@@ -12,6 +12,8 @@ final class CardsFailure extends CardsState {
   CardsFailure(this.error);
 }
 
+final class CardCreateSuccess extends CardsState {}
+
 final class CardsDisplaySuccess extends CardsState {
   final List<CreditCard> cards;
   CardsDisplaySuccess(this.cards);

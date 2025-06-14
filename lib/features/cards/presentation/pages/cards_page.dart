@@ -1,7 +1,9 @@
 import 'package:credit_cards_app/core/common/widgets/loader.dart';
+import 'package:credit_cards_app/core/theme/app_gradients.dart';
 import 'package:credit_cards_app/core/theme/app_pallete.dart';
 import 'package:credit_cards_app/core/utils/show_snackbar.dart';
 import 'package:credit_cards_app/features/cards/presentation/bloc/cards_bloc.dart';
+import 'package:credit_cards_app/features/cards/presentation/pages/add_new_card_page.dart';
 import 'package:credit_cards_app/features/cards/presentation/widgets/credit_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,7 @@ class _CardsPageState extends State<CardsPage> {
           IconButton(
             icon: const Icon(CupertinoIcons.add_circled),
             onPressed: () {
-              //Navigator.push(context, AddNewCardPage.route());
+              Navigator.push(context, AddNewCardPage.route());
             },
           ),
         ],
@@ -53,10 +55,10 @@ class _CardsPageState extends State<CardsPage> {
                 final cardData = state.cards[index];
                 return CreditCardWidget(
                   card: cardData,
-                  color:
-                      index % 2 == 0
-                          ? AppPallete.gradient1
-                          : AppPallete.gradient2,
+                  index: index,
+                  gradient:
+                      AppGradients().cardGradients[index %
+                          AppGradients().cardGradients.length],
                 );
               },
             );

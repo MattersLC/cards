@@ -17,6 +17,7 @@ class CardCreate implements Usecase<CreditCard, CardCreateParams> {
       cvv: params.cvv,
       mesExpiracion: params.mesExpiracion,
       anioExpiracion: params.anioExpiracion,
+      tipo: params.tipo,
     );
   }
 }
@@ -28,6 +29,7 @@ class CardCreateParams {
   final String cvv;
   final String mesExpiracion;
   final String anioExpiracion;
+  final String tipo;
 
   CardCreateParams({
     required this.alias,
@@ -36,5 +38,6 @@ class CardCreateParams {
     required this.cvv,
     required this.mesExpiracion,
     required this.anioExpiracion,
+    required this.tipo,
   });
 }

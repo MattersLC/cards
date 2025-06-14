@@ -6,6 +6,7 @@ class CreditCard {
   final String cvv;
   final String mesExpiracion;
   final String anioExpiracion;
+  final String tipo;
 
   CreditCard({
     required this.id,
@@ -15,5 +16,6 @@ class CreditCard {
     required this.cvv,
     required this.mesExpiracion,
     required this.anioExpiracion,
+    required this.tipo,
   });
 }

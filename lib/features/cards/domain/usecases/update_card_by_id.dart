@@ -12,6 +12,7 @@ class UpdateCardByIdParams {
   final String cvv;
   final String mesExpiracion;
   final String anioExpiracion;
+  final String tipo;
 
   UpdateCardByIdParams({
     required this.id,
@@ -21,6 +22,7 @@ class UpdateCardByIdParams {
     required this.cvv,
     required this.mesExpiracion,
     required this.anioExpiracion,
+    required this.tipo,
   });
 }
 
@@ -38,6 +40,7 @@ class UpdateCardById implements Usecase<CreditCard, UpdateCardByIdParams> {
       cvv: params.cvv,
       mesExpiracion: params.mesExpiracion,
       anioExpiracion: params.anioExpiracion,
+      tipo: params.tipo,
     );
   }
 }

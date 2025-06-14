@@ -26,6 +26,7 @@ class CardsRepositoryImpl implements CardsRepository {
     required String cvv,
     required String mesExpiracion,
     required String anioExpiracion,
+    required String tipo,
   }) async {
     try {
       final card = await cardsLocalDataSource.createNewCard(
@@ -35,6 +36,7 @@ class CardsRepositoryImpl implements CardsRepository {
         cvv: cvv,
         mesExpiracion: mesExpiracion,
         anioExpiracion: anioExpiracion,
+        tipo: tipo,
       );
       return Right(card);
     } catch (e) {
@@ -61,6 +63,7 @@ class CardsRepositoryImpl implements CardsRepository {
     required String cvv,
     required String mesExpiracion,
     required String anioExpiracion,
+    required String tipo,
   }) async {
     try {
       final card = await cardsLocalDataSource.updateCardById(
@@ -71,6 +74,7 @@ class CardsRepositoryImpl implements CardsRepository {
         cvv: cvv,
         mesExpiracion: mesExpiracion,
         anioExpiracion: anioExpiracion,
+        tipo: tipo,
       );
       return Right(card);
     } catch (e) {

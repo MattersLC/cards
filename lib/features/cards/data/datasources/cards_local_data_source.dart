@@ -14,6 +14,7 @@ abstract interface class CardsLocalDataSource {
     required String cvv,
     required String mesExpiracion,
     required String anioExpiracion,
+    required String tipo,
   });
 
   Future<CardModel> updateCardById({
@@ -24,6 +25,7 @@ abstract interface class CardsLocalDataSource {
     required String cvv,
     required String mesExpiracion,
     required String anioExpiracion,
+    required String tipo,
   });
 
   Future<void> deleteCardById({required int id});
@@ -42,6 +44,7 @@ class CardsLocalDataSourceImpl implements CardsLocalDataSource {
     required String cvv,
     required String mesExpiracion,
     required String anioExpiracion,
+    required String tipo,
   }) async {
     final db = await dbHelper.database;
     final id = await db.insert(DatabaseHelper.cardsTable, {
@@ -51,6 +54,7 @@ class CardsLocalDataSourceImpl implements CardsLocalDataSource {
       'cvv': cvv,
       'mesExpiracion': mesExpiracion,
       'anioExpiracion': anioExpiracion,
+      'tipo': tipo,
     });
     return CardModel(
       id: id,
@@ -60,6 +64,7 @@ class CardsLocalDataSourceImpl implements CardsLocalDataSource {
       cvv: cvv,
       mesExpiracion: mesExpiracion,
       anioExpiracion: anioExpiracion,
+      tipo: tipo,
     );
   }
 
@@ -94,6 +99,7 @@ class CardsLocalDataSourceImpl implements CardsLocalDataSource {
     String? cvv,
     String? mesExpiracion,
     String? anioExpiracion,
+    String? tipo,
   }) async {
     final db = await dbHelper.database;
     final card = await getCardById(id: id);
@@ -104,6 +110,7 @@ class CardsLocalDataSourceImpl implements CardsLocalDataSource {
       'cvv': cvv ?? card.cvv,
       'mesExpiracion': mesExpiracion ?? card.mesExpiracion,
       'anioExpiracion': anioExpiracion ?? card.anioExpiracion,
+      'tipo': tipo ?? card.tipo,
     };
     await db.update(
       DatabaseHelper.cardsTable,
