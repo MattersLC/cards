@@ -1,6 +1,6 @@
-import 'package:credit_cards_app/features/cards/domain/entities/card.dart';
+import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart';
 
-class CardModel extends Card {
+class CardModel extends CreditCard {
   CardModel({
     required super.id,
     required super.alias,
