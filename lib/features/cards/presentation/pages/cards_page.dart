@@ -47,6 +47,12 @@ class _CardsPageState extends State<CardsPage> {
             return const Loader();
           }
           if (state is CardsDisplaySuccess) {
+            if (state.cards.isEmpty) {
+              return Center(child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Text('Da click en el botón + para comenzar a agregar tarjetas.', style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+              ),);
+            }
             return ListView.builder(
               itemCount: state.cards.length,
               itemBuilder: (context, index) {

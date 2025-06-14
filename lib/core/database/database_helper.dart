@@ -32,7 +32,8 @@ class DatabaseHelper {
         numeroTarjeta TEXT NOT NULL,
         cvv TEXT NOT NULL,
         mesExpiracion TEXT NOT NULL,
-        anioExpiracion TEXT NOT NULL
+        anioExpiracion TEXT NOT NULL,
+        tipo TEXT NOT NULL
       )
     ''');
   }

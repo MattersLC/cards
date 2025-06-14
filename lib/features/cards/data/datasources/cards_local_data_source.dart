@@ -118,7 +118,7 @@ class CardsLocalDataSourceImpl implements CardsLocalDataSource {
       where: 'id = ?',
       whereArgs: [id],
     );
-    return getCardById(id: id);
+    return await getCardById(id: id);
   }
 
   @override

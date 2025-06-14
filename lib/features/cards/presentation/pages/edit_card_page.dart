@@ -1,11 +1,20 @@
+import 'package:credit_cards_app/core/common/widgets/loader.dart';
+import 'package:credit_cards_app/core/utils/show_snackbar.dart';
 import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart';
+import 'package:credit_cards_app/features/cards/presentation/bloc/cards_bloc.dart';
+import 'package:credit_cards_app/features/cards/presentation/pages/card_viewer_page.dart';
+import 'package:credit_cards_app/features/cards/presentation/pages/cards_page.dart';
+import 'package:credit_cards_app/features/cards/presentation/widgets/credit_card_editor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:credit_cards_app/features/cards/presentation/utils/card_type_detector.dart';
+import 'package:provider/provider.dart';
 
 class EditCardPage extends StatefulWidget {
   final CreditCard card;
-  const EditCardPage({super.key, required this.card});
+  final Gradient gradient;
+  const EditCardPage({super.key, required this.card, required this.gradient});
 
   @override
   State<EditCardPage> createState() => _EditCardPageState();
@@ -50,7 +59,27 @@ class _EditCardPageState extends State<EditCardPage> {
       final mesExpiracion = expParts.isNotEmpty ? expParts[0].trim() : '';
       final anioExpiracion = expParts.length > 1 ? expParts[1].trim() : '';
       final tipo = CardTypeDetector.detectType(cardNumber);
-      // TODO: Dispatch update event with new data
+
+      context.read<CardsBloc>().add(
+        CardsUpdateCard(
+          id: widget.card.id,
+          alias: aliasController.text.trim(),
+          numeroTarjeta: cardNumber,
+          mesExpiracion: mesExpiracion,
+          anioExpiracion: anioExpiracion,
+          nombrePropietario: cardHolderName,
+          cvv: cvvCode,
+          tipo: tipo,
+        ),
+      );
+
+      // Mostrar un mensaje de éxito
+      /*ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cambios guardados exitosamente')),
+      );
+
+      // Navegar hacia atrás para regresar a la pantalla anterior
+      Navigator.pop(context);*/
     }
   }
 
@@ -58,7 +87,23 @@ class _EditCardPageState extends State<EditCardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Editar Tarjeta')),
-      body: SingleChildScrollView(
+      body: BlocConsumer<CardsBloc, CardsState>(
+        listener: (context, state) {
+          if (state is CardsFailure) {
+            showSnackBar(context, state.error);
+          } else if (state is CardUpdateSuccess) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              CardsPage.route(),
+              (route) => false,
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is CardsLoading) {
+            return const Loader();
+          }
+          return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -77,12 +122,20 @@ class _EditCardPageState extends State<EditCardPage> {
                   obscureCardCvv: false,
                   isHolderNameVisible: true,
                   cardBgColor: Colors.black87,
-                  glassmorphismConfig: Glassmorphism.defaultConfig(),
+                  glassmorphismConfig: Glassmorphism(
+                    blurX: 0.0,
+                    blurY: 0.0,
+                    gradient: widget.gradient,
+                  ),
                   enableFloatingCard: true,
                   floatingConfig: FloatingConfig(
                     isGlareEnabled: true,
                     isShadowEnabled: true,
-                    shadowConfig: FloatingShadowConfig(),
+                    shadowConfig: FloatingShadowConfig(
+                      offset: Offset(10, 10),
+                      color: Colors.black87.withValues(alpha: 0.5),
+                      blurRadius: 15,
+                    ),
                   ),
                   labelValidThru: 'VENCE\nFIN DE',
                   labelExpiredDate: 'MM/AA',
@@ -118,7 +171,7 @@ class _EditCardPageState extends State<EditCardPage> {
                   });
                 },
                 obscureCvv: true,
-                obscureNumber: true,
+                obscureNumber: false,
                 isCardNumberVisible: true,
                 isExpiryDateVisible: true,
                 enableCvv: true,
@@ -167,56 +220,57 @@ class _EditCardPageState extends State<EditCardPage> {
                 },
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: aliasController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Alias de la tarjeta *',
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: CreditCardEditor(
+                  controller: aliasController,
+                  hintText: "Alias de la tarjeta",
                 ),
               ),
               const SizedBox(height: 32),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 350),
-                curve: Curves.easeInOut,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF232526), Color(0xFF414345)],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 16,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 350),
+                  curve: Curves.easeInOut,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
-                    onTap: saveChanges,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 18,
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF232526), Color(0xFF414345)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 16,
+                        offset: const Offset(0, 8),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.save_rounded, color: Colors.white),
-                          SizedBox(width: 12),
-                          Text(
-                            'Guardar cambios',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              letterSpacing: 1.2,
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(18),
+                      onTap: saveChanges,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 18,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Guardar cambios',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                letterSpacing: 1.2,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -226,6 +280,8 @@ class _EditCardPageState extends State<EditCardPage> {
             ],
           ),
         ),
+      );
+        }, 
       ),
     );
   }

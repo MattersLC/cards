@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:credit_cards_app/core/usecase/usecase.dart';
 import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart';
 import 'package:credit_cards_app/features/cards/domain/usecases/card_create.dart';
@@ -32,6 +31,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     on<CardsEvent>((event, emit) => emit(CardsLoading()));
     on<CreateCard>(_onCardCreate);
     on<CardsFetchAllCards>(_onFetchAllCards);
+    on<CardsUpdateCard>(_onUpdateCard);
     on<CardsDeleteCard>(_onDeleteCard);
   }
 
@@ -62,6 +62,17 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     result.fold(
       (failure) => emit(CardsFailure(failure.message)),
       (card) => emit(CardCreateSuccess()),
+    );
+  }
+
+  Future<void> _onUpdateCard(
+    CardsUpdateCard event,
+    Emitter<CardsState> emit
+  ) async {
+    final result = await _updateCardById(UpdateCardByIdParams(id: event.id, alias: event.alias, nombrePropietario: event.nombrePropietario, numeroTarjeta: event.numeroTarjeta, cvv: event.cvv, mesExpiracion: event.mesExpiracion, anioExpiracion: event.anioExpiracion, tipo: event.tipo,));
+    result.fold(
+      (failure) => emit(CardsFailure(failure.message)),
+      (card) => emit(CardUpdateSuccess()),
     );
   }
 

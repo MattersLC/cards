@@ -1,3 +1,5 @@
+import 'package:credit_cards_app/core/common/widgets/loader.dart';
+import 'package:credit_cards_app/core/utils/show_snackbar.dart';
 import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart';
 import 'package:credit_cards_app/features/cards/presentation/pages/edit_card_page.dart';
 import 'package:credit_cards_app/features/cards/presentation/widgets/credit_card_widget.dart';
@@ -35,7 +37,7 @@ class _CardViewerPageState extends State<CardViewerPage> {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => EditCardPage(card: widget.card),
+                    builder: (_) => EditCardPage(card: widget.card, gradient: widget.gradient,),
                   ),
                 ),
           ),
@@ -257,6 +259,20 @@ class _CardViewerPageState extends State<CardViewerPage> {
           ),
         ),
       ),
+      /*body: BlocConsumer(
+        listener: (context, state) {
+          if (state is CardsFailure) {
+            showSnackBar(context, state.error);
+          }
+        },
+        builder: (context, state) {
+          if (state is CardsLoading) {
+            return const Loader();
+          }
+
+          return 
+        },
+      ),*/
     );
   }
 }

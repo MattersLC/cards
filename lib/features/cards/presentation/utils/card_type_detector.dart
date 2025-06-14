@@ -11,7 +11,6 @@ class CardTypeDetector {
       return 'AMEX';
     }
     if (cleaned.startsWith('6')) return 'DISCOVER';
-    if (cleaned.startsWith('35')) return 'JCB';
     if (cleaned.startsWith('30') || cleaned.startsWith('38')) return 'DINERS';
     return 'OTRO';
   }

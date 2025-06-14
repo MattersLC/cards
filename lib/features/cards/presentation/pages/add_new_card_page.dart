@@ -143,7 +143,7 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
                       });
                     },
                     obscureCvv: true,
-                    obscureNumber: true,
+                    obscureNumber: false,
                     //isHolderNameVisible: true,
                     isCardNumberVisible: true,
                     isExpiryDateVisible: true,
@@ -199,7 +199,7 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: CreditCardEditor(
                       controller: aliasController,
-                      hintText: "Alias de la tarjeta *",
+                      hintText: "Alias de la tarjeta",
                     ),
                   ),
 
