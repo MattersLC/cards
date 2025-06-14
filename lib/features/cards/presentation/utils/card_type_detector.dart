@@ -1,5 +1,3 @@
-import 'package:flutter/services.dart';
-
 class CardTypeDetector {
   static String detectType(String cardNumber) {
     final cleaned = cardNumber.replaceAll(' ', '');

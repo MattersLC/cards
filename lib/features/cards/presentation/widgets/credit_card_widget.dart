@@ -1,5 +1,4 @@
 import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart';
-import 'package:credit_cards_app/features/cards/presentation/pages/card_viewer_page.dart';
 import 'package:flutter/material.dart';
 
 class CreditCardWidget extends StatelessWidget {

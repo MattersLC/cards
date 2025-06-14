@@ -1,4 +1,3 @@
-import 'package:credit_cards_app/core/theme/app_pallete.dart';
 import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart';
 import 'package:credit_cards_app/features/cards/presentation/pages/edit_card_page.dart';
 import 'package:credit_cards_app/features/cards/presentation/widgets/credit_card_widget.dart';
