@@ -1,77 +1,23 @@
 import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart';
+import 'package:credit_cards_app/features/cards/presentation/pages/card_viewer_page.dart';
 import 'package:flutter/material.dart';
 
 class CreditCardWidget extends StatelessWidget {
   final CreditCard card;
-  final int index;
   final Gradient gradient;
+  final Function()? onTap;
   const CreditCardWidget({
     super.key,
     required this.card,
-    required this.index,
+    this.onTap,
     required this.gradient,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        card.alias,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      if (card.tipo.toUpperCase() == 'VISA')
-                        Image.asset('assets/VISA-Logo.png', height: 32)
-                      else if (card.tipo.toUpperCase() == 'MASTERCARD')
-                        Image.asset('assets/MASTERCARD-Logo.png', height: 32)
-                      else if (card.tipo.toUpperCase() == 'AMEX')
-                        Image.asset('assets/AMEX-Logo.png', height: 32),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Número: ${card.numeroTarjeta}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Propietario: ${card.nombrePropietario}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Vigencia: ${card.mesExpiracion}/${card.anioExpiracion}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Tipo: ${card.tipo}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
+      //onTap: () => Navigator.push(context, CardViewerPage.route(card, gradient)),
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
         height: 200,

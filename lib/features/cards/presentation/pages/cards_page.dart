@@ -1,9 +1,9 @@
 import 'package:credit_cards_app/core/common/widgets/loader.dart';
 import 'package:credit_cards_app/core/theme/app_gradients.dart';
-import 'package:credit_cards_app/core/theme/app_pallete.dart';
 import 'package:credit_cards_app/core/utils/show_snackbar.dart';
 import 'package:credit_cards_app/features/cards/presentation/bloc/cards_bloc.dart';
 import 'package:credit_cards_app/features/cards/presentation/pages/add_new_card_page.dart';
+import 'package:credit_cards_app/features/cards/presentation/pages/card_viewer_page.dart';
 import 'package:credit_cards_app/features/cards/presentation/widgets/credit_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +32,7 @@ class _CardsPageState extends State<CardsPage> {
         actions: [
           IconButton(
             icon: const Icon(CupertinoIcons.add_circled),
-            onPressed: () {
-              Navigator.push(context, AddNewCardPage.route());
-            },
+            onPressed: () => Navigator.push(context, AddNewCardPage.route()),
           ),
         ],
       ),
@@ -53,12 +51,17 @@ class _CardsPageState extends State<CardsPage> {
               itemCount: state.cards.length,
               itemBuilder: (context, index) {
                 final cardData = state.cards[index];
+                final Gradient gradient =
+                    AppGradients().cardGradients[index %
+                        AppGradients().cardGradients.length];
                 return CreditCardWidget(
                   card: cardData,
-                  index: index,
-                  gradient:
-                      AppGradients().cardGradients[index %
-                          AppGradients().cardGradients.length],
+                  gradient: gradient,
+                  onTap:
+                      () => Navigator.push(
+                        context,
+                        CardViewerPage.route(cardData, gradient),
+                      ),
                 );
               },
             );

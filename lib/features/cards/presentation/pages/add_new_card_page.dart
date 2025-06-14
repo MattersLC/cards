@@ -1,13 +1,11 @@
 import 'package:credit_cards_app/core/common/widgets/loader.dart';
 import 'package:credit_cards_app/core/utils/show_snackbar.dart';
-import 'package:credit_cards_app/features/cards/domain/usecases/card_create.dart';
 import 'package:credit_cards_app/features/cards/presentation/bloc/cards_bloc.dart';
 import 'package:credit_cards_app/features/cards/presentation/pages/cards_page.dart';
 import 'package:credit_cards_app/features/cards/presentation/widgets/credit_card_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:provider/provider.dart';
 import 'package:credit_cards_app/features/cards/presentation/utils/card_type_detector.dart';
 
 class AddNewCardPage extends StatefulWidget {
