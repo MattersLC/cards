@@ -62,12 +62,13 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
+        /*actions: [
           IconButton(
             onPressed: uploadCard,
             icon: const Icon(Icons.done_rounded),
           ),
-        ],
+        ],*/
+        title: const Text('Agregar Nueva Tarjeta'),
       ),
       body: BlocConsumer<CardsBloc, CardsState>(
         listener: (context, state) {
@@ -201,6 +202,9 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
                       hintText: "Alias de la tarjeta *",
                     ),
                   ),
+
+                  const SizedBox(height: 16),
+                  ElevatedButton(onPressed: uploadCard, child: Text('Guardar')),
                 ],
               ),
             ),

@@ -32,6 +32,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     on<CardsEvent>((event, emit) => emit(CardsLoading()));
     on<CreateCard>(_onCardCreate);
     on<CardsFetchAllCards>(_onFetchAllCards);
+    on<CardsDeleteCard>(_onDeleteCard);
   }
 
   void _onFetchAllCards(
@@ -61,6 +62,17 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     result.fold(
       (failure) => emit(CardsFailure(failure.message)),
       (card) => emit(CardCreateSuccess()),
+    );
+  }
+
+  Future<void> _onDeleteCard(
+    CardsDeleteCard event,
+    Emitter<CardsState> emit,
+  ) async {
+    final result = await _deleteCardById(DeleteCardByIdParams(id: event.id));
+    result.fold(
+      (failure) => emit(CardsFailure(failure.message)),
+      (_) => add(CardsFetchAllCards()),
     );
   }
 }

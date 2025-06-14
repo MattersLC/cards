@@ -24,3 +24,8 @@ final class CreateCard extends CardsEvent {
 }
 
 final class CardsFetchAllCards extends CardsEvent {}
+
+final class CardsDeleteCard extends CardsEvent {
+  final int id;
+  CardsDeleteCard(this.id);
+}

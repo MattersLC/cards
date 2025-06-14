@@ -2,6 +2,8 @@ import 'package:credit_cards_app/features/cards/domain/entities/credit_card.dart
 import 'package:credit_cards_app/features/cards/presentation/pages/edit_card_page.dart';
 import 'package:credit_cards_app/features/cards/presentation/widgets/credit_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:credit_cards_app/features/cards/presentation/bloc/cards_bloc.dart';
 
 class CardViewerPage extends StatefulWidget {
   static route(CreditCard card, Gradient gradient) => MaterialPageRoute(
@@ -29,14 +31,13 @@ class _CardViewerPageState extends State<CardViewerPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => EditCardPage(card: widget.card),
+            onPressed:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => EditCardPage(card: widget.card),
+                  ),
                 ),
-              );
-            },
           ),
         ],
       ),
@@ -117,7 +118,9 @@ class _CardViewerPageState extends State<CardViewerPage> {
                                 letterSpacing: 1.2,
                               ),
                               child: Text(
-                                _showDetails ? 'Hide Details' : 'Show Details',
+                                _showDetails
+                                    ? 'Ocultar detalles'
+                                    : 'Ver detalles',
                               ),
                             ),
                           ],
@@ -190,6 +193,63 @@ class _CardViewerPageState extends State<CardViewerPage> {
                             ),
                           )
                           : const SizedBox.shrink(),
+                ),
+                const SizedBox(height: 32),
+                // Delete Card Button
+                ElevatedButton.icon(
+                  icon: const Icon(
+                    Icons.delete_forever_rounded,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Eliminar tarjeta',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 28,
+                      vertical: 14,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: const Text('Eliminar tarjeta'),
+                            content: const Text(
+                              '¿Estás seguro de que deseas eliminar esta tarjeta? Esta acción no se puede deshacer.',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed:
+                                    () => Navigator.of(context).pop(false),
+                                child: const Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed:
+                                    () => Navigator.of(context).pop(true),
+                                child: const Text(
+                                  'Eliminar',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          ),
+                    );
+                    if (confirm == true) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pop();
+                      // ignore: use_build_context_synchronously
+                      context.read<CardsBloc>().add(
+                        CardsDeleteCard(widget.card.id),
+                      );
+                    }
+                  },
                 ),
                 const SizedBox(height: 32),
               ],

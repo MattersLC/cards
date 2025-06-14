@@ -28,7 +28,7 @@ class _CardsPageState extends State<CardsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Credit Cards'),
+        title: const Text('CARTERA'),
         actions: [
           IconButton(
             icon: const Icon(CupertinoIcons.add_circled),

@@ -13,7 +13,13 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.all(27),
       enabledBorder: _border(),
-      focusedBorder: _border(AppPallete.gradient2),
+      focusedBorder: _border(AppPallete.secondaryColor),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppPallete.secondaryColor,
+        foregroundColor: AppPallete.whiteColor,
+      ),
     ),
   );
 }
