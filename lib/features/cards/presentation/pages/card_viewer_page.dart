@@ -37,7 +37,11 @@ class _CardViewerPageState extends State<CardViewerPage> {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => EditCardPage(card: widget.card, gradient: widget.gradient,),
+                    builder:
+                        (_) => EditCardPage(
+                          card: widget.card,
+                          gradient: widget.gradient,
+                        ),
                   ),
                 ),
           ),
@@ -198,15 +202,7 @@ class _CardViewerPageState extends State<CardViewerPage> {
                 ),
                 const SizedBox(height: 32),
                 // Delete Card Button
-                ElevatedButton.icon(
-                  icon: const Icon(
-                    Icons.delete_forever_rounded,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'Eliminar tarjeta',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,
                     padding: const EdgeInsets.symmetric(
@@ -252,6 +248,15 @@ class _CardViewerPageState extends State<CardViewerPage> {
                       );
                     }
                   },
+                  child: const Text(
+                    'Eliminar tarjeta',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      letterSpacing: 1.2,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 32),
               ],

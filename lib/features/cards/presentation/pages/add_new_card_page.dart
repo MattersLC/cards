@@ -68,7 +68,7 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
             icon: const Icon(Icons.done_rounded),
           ),
         ],*/
-        title: const Text('Agregar Nueva Tarjeta'),
+        title: const Text('AGREGAR NUEVA TARJETA'),
       ),
       body: BlocConsumer<CardsBloc, CardsState>(
         listener: (context, state) {
