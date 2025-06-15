@@ -204,6 +204,15 @@ class _EditCardPageState extends State<EditCardPage> {
                         labelText: 'Nombre del propietario',
                       ),
                     ),
+                    cardNumberValidator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa un número de tarjeta válido';
+                      }
+                      if (value.replaceAll(' ', '').length != 16) {
+                        return 'El número de tarjeta debe tener 16 dígitos';
+                      }
+                      return null;
+                    },
                     cardHolderValidator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor ingresa el nombre del propietario';
